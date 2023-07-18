@@ -1,17 +1,21 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+export default {
+  data: () => ({
+    pokemonList: [],
+  }),
+  async mounted() {
+    const pokeData = await fetch("https://pokeapi.co/api/v2/pokedex/2/").then((response) => response.json());
+    this.pokemonList = pokeData.pokemon_entries;
+  },
+};
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <h1>Pokedex</h1>
+
+  <li v-for="pokemon in pokemonList" key:pokemon>
+    ID: {{ pokemon.entry_number }} Name: {{ pokemon.pokemon_species.name }}
+  </li>
 </template>
 
 <style scoped>
