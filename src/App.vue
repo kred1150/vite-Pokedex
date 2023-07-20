@@ -1,5 +1,6 @@
 <script setup>
 import { reactive, ref, computed, onMounted } from "vue";
+import PokedexCard from "./components/PokedexCard.vue";
 
 const pokemonList = ref([]);
 const searchPokemon = ref("");
@@ -23,9 +24,12 @@ onMounted(async () => {
   <p>{{ searchPokemon }}</p>
   <input type="text" v-model="searchPokemon" />
 
-  <li v-for="pokemon in pokemonStore.filteredList" key:pokemon>
-    ID: {{ pokemon.entry_number }} Name: {{ pokemon.pokemon_species.name }}
-  </li>
+  <PokedexCard
+    v-for="pokemon in pokemonStore.filteredList"
+    key:pokemon
+    :number="pokemon.entry_number"
+    :name="pokemon.pokemon_species.name"
+  />
 </template>
 
 <style scoped>
